@@ -1,0 +1,410 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; /* Фиксированный базовый размер шрифта */
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.5;
+}
+
+.boss-dialog {
+    position: absolute;
+    top: 100%; /* Размещаем прямо под кнопкой */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid #ff0000;
+    max-width: 80%;
+    text-align: center;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+    margin-top: 10px; /* Небольшой отступ от кнопки */
+}
+
+.boss-dialog.show {
+    opacity: 1;
+    display: block;
+}
+
+.dialog-content {
+    font-size: 1.5rem;
+    font-family: 'Black Ops One', cursive;
+    text-shadow: 0 0 5px #ff0000;
+    padding: 10px;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px #ff0000; }
+    50% { box-shadow: 0 0 20px #ff0000; }
+}
+
+#clickButton:focus {
+    outline: none; /* Убираем стандартный фокус */
+    box-shadow: none; /* Убираем тени при фокусе */
+}
+
+.monsterContent {
+    max-width: 700px;
+    margin: 130px auto 0;
+    display: flex;
+    flex-direction: row; /* Горизонтальное расположение элементов */
+    align-items: center; /* Выравнивание по центру по вертикали */
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    gap: 30px;
+}
+
+.monsterImage {
+    background: none;
+    box-shadow: none;
+}
+
+.monster-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    order: 2; /* Центральная позиция (монстр) */
+}
+
+.monster-hit-area {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.monster-hit-area::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 1;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Backgrounds/background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7);
+    z-index: -1;
+    transition: background-image 0.5s ease-in-out; /* Добавьте плавный переход */
+}
+
+.content {
+    max-width: 800px; /* Фиксированная максимальная ширина */
+    margin: 0 auto; /* Центрирование */
+    padding: 20px;
+    position: relative;
+    top: 50px;
+    z-index: 1;
+    padding-top: 5px;
+    
+}
+
+.stats-toggle-button {
+    z-index: 1001; /* Чтобы была выше сайдбара */
+    position: fixed;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 83, 9, 0.7);
+    border: none;
+    border-radius: 5px 0 0 5px;
+    padding: 0; /* Убираем padding */
+    cursor: pointer;
+    z-index: 1001;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+}
+
+.stats-toggle-button img {
+    width: 40px; /* Уменьшаем размер изображения */
+    height: 40px;
+    object-fit: contain;
+    display: block; /* Убираем лишние отступы */
+    margin: 0 auto; /* Дополнительное центрирование */
+}
+
+.stats-toggle-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.stats-toggle-button:hover img {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.stats-sidebar {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 999;
+    transition: right 0.3s ease;
+    padding: 20px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.stats-sidebar.active {
+    right: 0;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: white;
+}
+
+#sidebarUpgradeAttack {
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+#sidebarUpgradeAttack:hover {
+    background-color: #2980b9;
+}
+
+#sidebarUpgradeAttack:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .stats-sidebar {
+        width: 250px;
+    }
+}
+
+#clickButton {
+    margin-top: 0; /* Убираем отступ сверху у кнопки */
+    cursor: url('Деревянный.png'), auto;
+    background-color: transparent; 
+    border: none; 
+    padding: 0;
+    margin-top: 0;
+    border-radius: 0; /* Убираем скругление углов */
+    overflow: hidden; /* Обрезаем все, что выходит за границы */
+    width: 250px;
+    height: 250px;
+}
+
+#clickButton img {
+    
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 0; /* Убираем скругление углов у изображения */
+    background-color: transparent;
+    border: none;
+    display: block; /* Убираем лишние отступы */
+    pointer-events: none; /* Позволяет кликать "сквозь" изображение */
+}
+.stats p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    line-height: 1.3; /* Уменьшаем межстрочный интервал */
+}
+
+.upgrades {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative; /* Это важно для абсолютного позиционирования дочерних элементов */
+}
+
+h1 {
+    color: #ff0000;
+    margin-bottom: 50px; /* Увеличиваем отступ снизу заголовка */
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    font-family: 'Black Ops One', cursive;
+    text-shadow: 
+        3px 3px 0 #8b0000,
+        6px 6px 0 #4b0000;
+    letter-spacing: 2px;
+    position: relative;
+    margin-bottom: 30px;
+    background: linear-gradient(to bottom, #ff0000, #8b0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: bloodDrip 3s infinite;
+}
+
+@keyframes bloodDrip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+.restart-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 75px; /* Размер по вашему вкусу */
+    height: 75px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    transition: transform 0.3s;
+}
+
+.restart-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.restart-button:hover {
+    animation: spin 0.5s linear infinite;
+}
+
+.restart-button:active {
+    transform: scale(0.9) rotate(360deg);
+}
+
+#clickButton:active {
+    transform: scale(0.95);
+}
+
+#timer, #lives {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.health-container {
+    width: 250px;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-bottom: 15px; /* Отступ между здоровьем и монстром */
+}
+
+.health-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #e74c3c;
+    border-radius: 15px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.timer-container {
+    width: 40px; /* 30px */
+    height: 250px; /* 200px */
+    background-color: #ddd;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 0; /* Убираем нижний отступ */
+    order: 1; /* Позиция слева (таймер) */
+    margin-right: 30px; /* Отступ от монстра */
+}
+
+.timer-bar {
+    width: 100%;
+    background-color: #3498db;
+    transition: height 0.3s ease;
+    border-radius: 15px;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    font-size: 1.5em;
+}
+
+#timer {
+    display: none;
+}
+
+.health-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    font-size: 1.5em;
+}
+
+.stats-sidebar .stats {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    color: white !important;
+    height: auto !important;
+}
+
+.stats-sidebar .stats p {
+    color: white !important;
+}
+

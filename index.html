@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>МонстроБой</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="content">
+        <h1>МонстроБой</h1>
+        <p id="timer">Время: 20 секунд</p>
+        
+        <div class="monsterContent">
+            <div class="timer-container">
+                <div class="timer-bar" id="timerBar"></div>
+                <span class="timer-text" id="timerText">20</span>
+            </div>
+            
+            <div class="monster-wrapper">
+                <div class="health-container">
+                    <div class="health-bar" id="healthBar"></div>
+                    <span class="health-text" id="livesText">30/30</span>
+                </div>
+                
+                <button id="clickButton" class="monster-hit-area" tabindex="-1">
+                    <img id="monsterImage" src="Monsters/монстр1.png" alt="Monster">
+                </button>
+            </div>
+        </div>
+        <div class="upgrades">
+            <div id="bossDialog" class="boss-dialog">
+                <div class="dialog-content"></div>
+            </div>
+        </div>
+        <button id="restartButton" class="restart-button">
+            <img src="Interface/retry.png" alt="Новая игра">
+        </button>
+    </div>
+    
+        <button class="stats-toggle-button">
+            <img src="Interface/sidebar.png" alt="Меню">
+        </button>
+        <div class="stats-sidebar">
+            <div class="sidebar-content">
+                <div class="stats">
+                    <p>Уровень атаки: <span id="sidebarAttackLevel">1</span></p>
+                    <p>Урон: <span id="sidebarDamage">1</span></p>
+                    <p>Очки улучшений: <span id="sidebarUpgradePoints">0</span></p>
+                </div>
+                <button id="sidebarUpgradeAttack">Улучшить атаку (3 очков)</button>
+            </div>
+        </div>
+    <script src="script.js"></script>    
+</body>
+</html>
